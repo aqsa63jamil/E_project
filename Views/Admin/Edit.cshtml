@@ -1,0 +1,46 @@
+﻿@model WebApplication2.ViewModels.EmployeeDetailsViewModel
+
+<h2>Edit Employee</h2>
+
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post)) // Changed action to "Edit"
+{
+    @Html.HiddenFor(m => m.EmpId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.TextBoxFor(m => m.Password, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Salary)
+        @Html.TextBoxFor(m => m.Salary, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address)
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ContactNo)
+        @Html.TextBoxFor(m => m.ContactNo, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.SelectedRoleId, "Role")
+        @Html.DropDownListFor(m => m.SelectedRoleId, (SelectList)ViewBag.Roles, "Select a Role", new { @class = "form-control" })
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a asp-action="EmployeeList" class="btn btn-secondary">Cancel</a>
+}

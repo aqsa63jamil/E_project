@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication2.ViewModels.EmployeeDetailsViewModel>
+
+<h2>Employee List</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Salary</th>
+            <th>Address</th>
+            <th>ContactNo</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@employee.EmpId</td>
+                <td>@employee.Name</td>
+                <td>@employee.Email</td>
+                <td>@employee.Password</td>
+                <td>@employee.Salary</td>
+                <td>@employee.Address</td>
+                <td>@employee.ContactNo</td>
+                <td>@employee.RoleName</td>
+                <td><a asp-controller="Admin" asp-action="Edit" asp-route-id="@employee.EmpId">
+                    Edit | 
+                </a>
+                    <a asp-controller="Admin" asp-action="Delete" asp-route-id="@employee.EmpId">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
