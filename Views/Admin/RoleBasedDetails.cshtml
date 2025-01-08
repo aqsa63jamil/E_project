@@ -2,7 +2,6 @@
     Layout = null;
     Layout = "~/Views/Shared/layout2.cshtml";
 }
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,6 +10,7 @@
     @Html.Partial("_Navbar")
     <!-- ======== main-wrapper start =========== -->
     <main class="main-wrapper">
+
         <!-- ========== header start ========== -->
         <header class="header text-dark py-3">
             <div class="container-fluid">
@@ -87,6 +87,7 @@
             </div>
         </header>
         <!-- ========== header end ========== -->
+
         <!-- ========== section start ========== -->
         <section class="section">
             <div class="container-fluid">
@@ -95,7 +96,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                               @*  <h2>Details</h2> *@
+                             @*    <h2>Details</h2> *@
                             </div>
                         </div>
                         <!-- end col -->
@@ -107,7 +108,7 @@
                                             <a href="#0">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                            Details
+                                         Details
                                         </li>
                                     </ol>
                                 </nav>
@@ -118,24 +119,20 @@
                     <!-- end row -->
                 </div>
                 <!-- ========== title-wrapper end ========== -->
-
                 @{
                     var currentPage = ViewBag.CurrentPage;
                     var totalPages = ViewBag.TotalPages;
                     var employees = ViewBag.Employees as List<WebApplication2.ViewModels.EmployeeDetailsViewModel>;
                 }
-@*                 @model IEnumerable<WebApplication2.ViewModels.EmployeeDetailsViewModel>
- *@
+
+                @model IEnumerable<WebApplication2.ViewModels.EmployeeDetailsViewModel>
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card-style mb-30">
-                            <h2 class="mb-10">Details</h2>
-                            <p class="text-sm mb-20">
-                                Here's All The Information About Employees and Managers
-                            </p>
-                            <div class="table-wrapper table-responsive table-bordered table-striped">
+                            <h2 class="mb-5">@Model.FirstOrDefault().RoleName Details</h2>
+                            <div class="table-wrapper table-responsive">
                                 <table class="table table-hover" style="border-spacing: 0 10px; border-collapse: separate;">
-                                    @* <table class="table table-bordered table-striped table-hover"> *@
                                     <thead class="thead-light">
                                         <tr>
                                             <th class="text-center px-3"><h6 class="text-sm text-medium">#</h6></th>
@@ -165,11 +162,7 @@
                                                 <td class="text-center"><p class="text-sm">@employee.Address</p></td>
                                                 <td class="text-center"><p class="text-sm">@employee.ContactNo</p></td>
                                                 <td class="text-center"><p class="text-sm">@employee.RoleName</p></td>
-                                                <td class="text-center">
-                                                    <p class="text-sm" style="margin-left:1rem; margin-right:1rem;">
-                                                    <span class="status-btn active-btn">@employee.StatusDescription</span>
-                                                    </p>
-                                                </td>
+                                                <td class="text-center"><p class="text-sm" style="margin-left:1rem; margin-right:1rem;"><span class="status-btn active-btn">@employee.StatusDescription</span></p></td>
                                                 <td class="text-center">
                                                     <p class="text-sm">
                                                         @if (employee.PolicyName != "No Policy Assigned")
@@ -201,23 +194,24 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <p class="text-sm">
-                                                        @employee.PolicyDate
-                                       
+                                                        @if (employee.PolicyDate.HasValue)
+                                                        {
+                                                            @employee.PolicyDate
+                                                        }
+                                                        else
+                                                        {
+                                                            <span>N/A</span>
+                                                        }
                                                     </p>
                                                 </td>
-                                                @*<td>
-                                                    <p class="text-sm">
-                                                        @employee.PolicyDate?.ToString("dd/MM/yyyy")
-                                                    </p>
-                                                 </td> *@
                                                 <td class="text-center">
                                                     <div class="action">
                                                         <a asp-controller="Admin" asp-action="Edit" asp-route-id="@employee.EmpId" asp-route-returnUrl="@ViewContext.HttpContext.Request.Path" class="text-primary">
-                                                            <i class="bi bi-pencil-square" style="margin-left:1.2rem;"></i>
+                                                            <i class="lni lni-pencil"></i>
                                                         </a>
-                                                        @*<i class="lni lni-pencil"></i> *@
+
                                                         <a asp-controller="Admin" asp-action="Delete" asp-route-id="@employee.EmpId" asp-route-returnUrl="@ViewContext.HttpContext.Request.Path" class="text-danger">
-                                                            <i class="lni lni-trash-can" style="margin-left:1.2rem;"></i>
+                                                            <i class="lni lni-trash-can" style="margin-left:1rem;"></i>
                                                         </a>
                                                     </div>
                                                 </td>
@@ -237,9 +231,8 @@
 
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                      
                         <li class="page-item @(currentPage == 1 ? "disabled" : "")">
-                            <a class="page-link" href="@Url.Action("EmployeeList", new { page = currentPage - 1 })" aria-label="Previous">
+                            <a class="page-link" href="@Url.Action(ViewContext.RouteData.Values["action"].ToString(), new { page = currentPage - 1 })" aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -247,11 +240,12 @@
                         @for (int i = 1; i <= totalPages; i++)
                         {
                             <li class="page-item @(i == currentPage ? "active" : "")">
-                                <a class="page-link" href="@Url.Action("EmployeeList", new { page = i })">@i</a>
+                                <a class="page-link" href="@Url.Action(ViewContext.RouteData.Values["action"].ToString(), new { page = i })">@i</a>
                             </li>
                         }
+
                         <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
-                            <a class="page-link" href="@Url.Action("EmployeeList", new { page = currentPage + 1 })" aria-label="Next">
+                            <a class="page-link" href="@Url.Action(ViewContext.RouteData.Values["action"].ToString(), new { page = currentPage + 1 })" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>

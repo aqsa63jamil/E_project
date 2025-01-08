@@ -2,8 +2,8 @@
     Layout = null;
     Layout = "~/Views/Shared/layout2.cshtml";
 }
-@model WebApplication2.ViewModels.EmpRegisterViewModel
 
+@model WebApplication2.Models.Role
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +12,6 @@
     @Html.Partial("_Navbar")
     <!-- ======== main-wrapper start =========== -->
     <main class="main-wrapper">
-        <!-- ========== header start ========== -->
         <!-- ========== header start ========== -->
         <header class="header text-dark py-3">
             <div class="container-fluid">
@@ -54,10 +53,10 @@
                                     <li>
                                         <div class="author-info flex items-center !p-1">
                                             <div class="image">
-                                                <img src="~/assets/images/profile/@Context.Session.GetString("AdminProfileImage")" alt="Admin Profile" class="profile-img" style="height:100%" />
+                                                <img src="@ViewBag.AdminProfileImage" alt="Admin Profile">
                                             </div>
                                             <div class="content">
-                                                <h4 class="text-sm">@Context.Session.GetString("AdminName")"</h4>
+                                                <h4 class="text-sm"> @ViewBag.AdminName</h4>
                                                 <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#"></a>
                                             </div>
                                         </div>
@@ -98,7 +97,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <div class="title">
-                                <h2 class="text-left mb-4">Add New Employee</h2>
+                                <h2>Add Role</h2>
                             </div>
                         </div>
                         <!-- end col -->
@@ -107,10 +106,10 @@
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item">
-                                            <a href="#0">Dashboard</a>
+                                            <a asp-action="Dashboard" asp-controller="Admin">Dashboard</a>
                                         </li>
                                         <li class="breadcrumb-item active" aria-current="page">
-                                           Add Employee
+                                            Add Role
                                         </li>
                                     </ol>
                                 </nav>
@@ -121,108 +120,30 @@
                     <!-- end row -->
                 </div>
                 <!-- ========== title-wrapper end ========== -->
-
                 <div class="container py-4 px-3 border rounded shadow-lg bg-light">
-                    <form id="addEmployeeForm" asp-action="AddEmployee" asp-controller="Admin" method="post">
-                        @Html.AntiForgeryToken()
-                        <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
-
+                    <form asp-action="AddRole" asp-controller="Admin" method="post">
                         <div class="row g-4">
-                            <!-- Name -->
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <div class="form-floating flex-grow-1">
-                                        <input asp-for="Name" class="form-control" id="Name" placeholder="Enter employee name" />
-                                        <label asp-for="Name"></label>
-                                    </div>
-                                    <span class="input-group-text"><i class="lni lni-user"></i></span>
-                                </div>
-                                <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>
-
-                            <!-- Email -->
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <div class="form-floating flex-grow-1">
-                                        <input asp-for="Email" class="form-control" id="Email" placeholder="Enter email address" />
-                                        <label asp-for="Email"></label>
-                                    </div>
-                                    <span class="input-group-text"><i class="lni lni-envelope"></i></span>
-                                </div>
-                                <span asp-validation-for="Email" class="text-danger"></span>
-                            </div>
-
-                            <!-- Password -->
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <div class="form-floating flex-grow-1">
-                                        <input asp-for="Password" type="password" class="form-control" id="Password" placeholder="Enter password" />
-                                        <label asp-for="Password"></label>
-                                    </div>
-                                    <span class="input-group-text"><i class="lni lni-lock"></i></span>
-                                </div>
-                                <span asp-validation-for="Password" class="text-danger"></span>
-                            </div>
-
-                            <!-- Salary -->
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                     <div class="form-floating flex-grow-1">
-                                        <input asp-for="Salary" type="text" class="form-control" id="Salary" placeholder="Enter Salary" />
-                                        <label asp-for="Salary"></label>
-                                     </div>
-                                     <span class="input-group-text"><i class="bi bi-cash-stack"></i></span>
-                                </div>
-                                <span asp-validation-for="Salary" class="text-danger"></span>
-                            </div>
-
-                            <!-- Address -->
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <div class="form-floating flex-grow-1">
-                                        <input asp-for="Address" class="form-control" id="Address" placeholder="Enter Address" />
-                                        <label asp-for="Address"></label>
-                                    </div>
-                                    <span class="input-group-text"><i class="lni lni-map-marker"></i></span>
-                                </div>
-                                <span asp-validation-for="Address" class="text-danger"></span>
-                            </div>
-
-                            <!-- ContactNo -->
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <div class="form-floating flex-grow-1">
-                                        <input asp-for="ContactNo" class="form-control" id="ContactNo" placeholder="Enter ContactNo" />
-                                        <label asp-for="ContactNo"></label>
-                                    </div>
-                                    <span class="input-group-text"><i class="lni lni-phone"></i></span>
-                                </div>
-                                <span asp-validation-for="ContactNo" class="text-danger"></span>
-                            </div>
-
-                            <!-- Roles -->
-                            <div class="col-md-6">
-                                <div class="form-floating position-relative">
-                                    <select asp-for="SelectedRoleId" asp-items="Model.Roles" class="form-select">
-                                        <option value="">Select a Role</option>
-                                    </select>
-                                    <label asp-for="SelectedRoleId"></label>
-                                    <span asp-validation-for="SelectedRoleId" class="text-danger"></span>
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input asp-for="RoleName" class="form-control" id="RoleName" placeholder="Enter RoleName" />
+                                    <label asp-for="RoleName"></label>
+                                    <span asp-validation-for="RoleName" class="text-danger"></span>
                                 </div>
                             </div>
+                            <!-- end col -->
                         </div>
-
+                        <!-- end row -->
                         <div class="d-flex justify-content-center mt-4">
-                            <button type="submit" class="main-btn primary-btn-outline btn-hover px-4 py-2">Submit</button>
+                            <button type="submit" class="main-btn primary-btn-outline btn-hover px-4 py-2">Save Role</button>
                         </div>
                     </form>
                 </div>
             </div>
             <!-- end container -->
         </section>
-        <!-- ========== section end ========== -->
-        @Html.Partial("_Footer")
+<!-- ========== section end ========== -->
+@Html.Partial("_Footer")
     </main>
-    <!-- ======== main-wrapper end =========== -->
+<!-- ======== main-wrapper end =========== -->
 </body>
 </html>
