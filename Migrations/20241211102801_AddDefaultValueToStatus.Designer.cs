@@ -11,8 +11,8 @@ using WebApplication2.Models;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(Connection))]
-    [Migration("20241208142305_UpdateEmpRegisters")]
-    partial class EmpRegisters
+    [Migration("20241211102801_AddDefaultValueToStatus")]
+    partial class AddDefaultValueToStatus
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,6 +59,10 @@ namespace WebApplication2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("EmpId");
 
                     b.HasIndex("RoleId");
@@ -86,12 +90,17 @@ namespace WebApplication2.Migrations
             modelBuilder.Entity("WebApplication2.Models.Employee", b =>
                 {
                     b.HasOne("WebApplication2.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("EmpRegisters")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("WebApplication2.Models.Role", b =>
+                {
+                    b.Navigation("EmpRegisters");
                 });
 #pragma warning restore 612, 618
         }

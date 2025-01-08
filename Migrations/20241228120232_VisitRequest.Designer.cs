@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApplication2.Models;
 
@@ -11,9 +12,11 @@ using WebApplication2.Models;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(Connection))]
-    partial class ConnectionModelSnapshot : ModelSnapshot
+    [Migration("20241228120232_VisitRequest")]
+    partial class VisitRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,21 +38,14 @@ namespace WebApplication2.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Email");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfileImage")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("AdminId");
 
-                    b.ToTable("Admin", (string)null);
+                    b.ToTable("Admin");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Employee", b =>
@@ -105,7 +101,7 @@ namespace WebApplication2.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("EmpRegisters", (string)null);
+                    b.ToTable("EmpRegisters");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.FinanceManager", b =>
@@ -134,7 +130,7 @@ namespace WebApplication2.Migrations
 
                     b.HasIndex("VisitRequestId");
 
-                    b.ToTable("FinanceManagers", (string)null);
+                    b.ToTable("FinanceManagers");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Hospital", b =>
@@ -178,7 +174,7 @@ namespace WebApplication2.Migrations
 
                     b.HasIndex("VisitRequestId");
 
-                    b.ToTable("Hospitals", (string)null);
+                    b.ToTable("Hospitals");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Medical_Invoice", b =>
@@ -223,7 +219,7 @@ namespace WebApplication2.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Medical_Invoice", (string)null);
+                    b.ToTable("Medical_Invoice");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Notification", b =>
@@ -248,7 +244,7 @@ namespace WebApplication2.Migrations
 
                     b.HasIndex("TreatmentRequestId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Per_Hospital", b =>
@@ -273,7 +269,7 @@ namespace WebApplication2.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Per_Hospitals", (string)null);
+                    b.ToTable("Per_Hospitals");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Policy", b =>
@@ -297,7 +293,7 @@ namespace WebApplication2.Migrations
 
                     b.HasKey("PolicyId");
 
-                    b.ToTable("Policies", (string)null);
+                    b.ToTable("Policies");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Role", b =>
@@ -314,7 +310,7 @@ namespace WebApplication2.Migrations
 
                     b.HasKey("RoleId");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.TreatmentRequest", b =>
@@ -354,7 +350,7 @@ namespace WebApplication2.Migrations
 
                     b.HasKey("RequestId");
 
-                    b.ToTable("TreatmentRequests", (string)null);
+                    b.ToTable("TreatmentRequests");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.VisitRequest", b =>
@@ -403,7 +399,7 @@ namespace WebApplication2.Migrations
                     b.HasIndex("VisitRequestId")
                         .IsUnique();
 
-                    b.ToTable("VisitRequest", (string)null);
+                    b.ToTable("VisitRequest");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Employee", b =>

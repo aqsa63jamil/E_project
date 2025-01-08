@@ -11,15 +11,15 @@ using WebApplication2.Models;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(Connection))]
-    [Migration("20241208142305_UpdateEmpRegisters")]
-    partial class EmpRegisters
+    [Migration("20241217003630_projects")]
+    partial class projects
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -52,18 +52,52 @@ namespace WebApplication2.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("PolicyId")
+                        .HasColumnType("int");
+
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Salary")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("Salary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.HasKey("EmpId");
+
+                    b.HasIndex("PolicyId");
 
                     b.HasIndex("RoleId");
 
                     b.ToTable("EmpRegisters");
+                });
+
+            modelBuilder.Entity("WebApplication2.Models.Policy", b =>
+                {
+                    b.Property<int>("PolicyId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PolicyId"));
+
+                    b.Property<decimal>("PolicyAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("PolicyDesc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PolicyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("RemainingAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("PolicyId");
+
+                    b.ToTable("Policies");
                 });
 
             modelBuilder.Entity("WebApplication2.Models.Role", b =>
@@ -85,13 +119,31 @@ namespace WebApplication2.Migrations
 
             modelBuilder.Entity("WebApplication2.Models.Employee", b =>
                 {
+                    b.HasOne("WebApplication2.Models.Policy", "Policy")
+                        .WithMany("Policies")
+                        .HasForeignKey("PolicyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WebApplication2.Models.Role", "Role")
-                        .WithMany()
+                        .WithMany("EmpRegisters")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Policy");
+
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("WebApplication2.Models.Policy", b =>
+                {
+                    b.Navigation("Policies");
+                });
+
+            modelBuilder.Entity("WebApplication2.Models.Role", b =>
+                {
+                    b.Navigation("EmpRegisters");
                 });
 #pragma warning restore 612, 618
         }
