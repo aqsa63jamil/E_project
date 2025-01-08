@@ -10,6 +10,13 @@ namespace WebApplication2.Models
         [Required]
         public string RoleName { get; set; }
 
+        public Role() { }
+
+        public Role(string roleName)
+        {
+            RoleName = roleName;
+        }
+
         public ICollection<Employee> EmpRegisters { get; set; }
 
     }
