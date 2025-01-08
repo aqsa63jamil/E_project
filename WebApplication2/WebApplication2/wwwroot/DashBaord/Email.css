@@ -1,0 +1,62 @@
+﻿
+body 
+
+{
+    font-family: Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+}
+
+
+
+h2 {
+
+
+    color: #004085;
+    font-size: 22px;
+}
+
+
+
+p {
+
+
+    font-size: 14px;
+
+
+}
+
+.invoice-details {
+
+
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+
+
+.invoice-item {
+
+
+    padding: 8px 0;
+    font-weight: bold;
+}
+
+.footer {
+
+
+    margin-top: 30px;
+    font-size: 12px;
+    color: #777;
+}
+
+.footer a {
+
+
+    color: #004085;
+    text-decoration: none;
+}
+
+

@@ -1,0 +1,87 @@
+﻿:root {
+    /* Light Theme Colors */
+    --light-bg: #f0f8ff;
+    --light-surface: #ffffff;
+    --light-text: #2c3e50;
+    --light-accent: #3498db;
+    --light-border: #e1e8ed;
+    --light-shadow: rgba(0, 0, 0, 0.1);
+    /* Dark Theme Colors */
+    --dark-bg: #1a2035;
+    --dark-surface: #2c3e50;
+    --dark-text: #ecf0f1;
+    --dark-accent: #3498db;
+    --dark-border: #34495e;
+    --dark-shadow: rgba(0, 0, 0, 0.3);
+    /* Status Colors */
+    --status-green: #2ecc71;
+    --status-yellow: #f1c40f;
+    --status-red: #e74c3c;
+    /* Layout */
+    --sidebar-width: 250px;
+    /* Transitions */
+    --transition-speed: 0.3s;
+    /* Default Theme (Light) */
+    --bg-color: var(--light-bg);
+    --surface-color: var(--light-surface);
+    --text-color: var(--light-text);
+    --accent-color: var(--light-accent);
+    --border-color: var(--light-border);
+    --shadow-color: var(--light-shadow);
+}
+
+/* Dark Theme */
+body.dark-mode {
+    --bg-color: var(--dark-bg);
+    --surface-color: var(--dark-surface);
+    --text-color: var(--dark-text);
+    --accent-color: var(--dark-accent);
+    --border-color: var(--dark-border);
+    --shadow-color: var(--dark-shadow);
+}
+
+/* Theme Toggle */
+.theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+    .theme-toggle input {
+        display: none;
+    }
+
+    .theme-toggle label {
+        cursor: pointer;
+        padding: 0.5rem;
+        background: var(--surface-color);
+        border-radius: 50%;
+        box-shadow: 0 2px 5px var(--shadow-color);
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-speed);
+    }
+
+    .theme-toggle .fa-sun {
+        display: none;
+    }
+
+    .theme-toggle .fa-moon {
+        display: block;
+    }
+
+body.dark-mode .theme-toggle .fa-sun {
+    display: block;
+}
+
+body.dark-mode .theme-toggle .fa-moon {
+    display: none;
+}
+
+#theme-switch:checked + label {
+    transform: rotate(180deg);
+}
