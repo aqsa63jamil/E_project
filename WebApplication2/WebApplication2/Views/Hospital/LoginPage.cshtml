@@ -1,0 +1,72 @@
+﻿@model Hospital
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Portal Sign In</title>
+    <link rel="stylesheet" href="~/DashBaord/loginpage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                    <path d="M14 8v6H8v4h6v6h4v-6h6v-4h-6V8h-4z" fill="#0066FF" />
+                </svg>
+            </div>
+            <img src="https://cdn-icons-png.flaticon.com/512/6260/6260435.png" alt="Medical illustration" class="hero-image">
+        </div>
+
+        <div class="right-section">
+            <div class="header">
+                <div class="signup-link">
+                    <h2>Hey Admin!</h2>
+                </div>
+            </div>
+
+            <div class="login-container">
+                <h1>Admin Portal</h1>
+
+                <div class="oauth-buttons">
+                    <p>Sign in with your provider</p>
+                   @*  <div class="button-group">
+                        <a class="oauth-button google" asp-action="Login" asp-controller="Login" style="text-decoration:none;">
+                            <img src="https://www.google.com/favicon.ico" alt="Google">
+                            Google
+                        </a>
+                    </div> *@
+                </div>
+
+                @* <div class="divider">
+                    <span>Or continue with email address</span>
+                </div> *@
+
+                <form class="login-form" method="post">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Admin@email.com" required asp-for="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="Contact Number">Contact Number</label>
+                        <input type="text" id="ContactNumber" placeholder="Enter Your Contact Number" required asp-for="ContactNumber">
+                    </div>
+                    <div class="form-footer">
+                        <div class="remember-me">
+                            <input type="checkbox" id="remember">
+                            <label for="remember">Remember me</label>
+                        </div>
+                      @*   <a href="#" class="forgot-password">Forgot password?</a> *@
+                    </div>
+                    <button type="submit" class="submit-button">Access Portal</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

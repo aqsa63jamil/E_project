@@ -1,0 +1,22 @@
+﻿@if (TempData["Message"] != null)
+{
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "timeOut": "2000", // 2 seconds
+                "extendedTimeOut": "500", // 0.5 seconds
+                "showDuration": "200", // 0.2 seconds
+                "hideDuration": "200"  // 0.2 seconds
+            };
+            toastr.success('@TempData["Message"]');
+        });
+    </script>
+}

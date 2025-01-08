@@ -1,0 +1,132 @@
+﻿@{
+    Layout = null;
+    Layout = "~/Views/Shared/layout2.cshtml";
+}
+ <!DOCTYPE html>
+<html lang="en">
+
+<body>
+        <!-- ========== section start ========== -->
+        <section class="section">
+            <div class="container-fluid">
+                <!-- ========== title-wrapper start ========== -->
+                <div class="title-wrapper pt-30">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="title">
+                                <h2>Sign In</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-0 auth-row">
+                    <div class="col-lg-6">
+                        <div class="auth-cover-wrapper bg-primary-100">
+                            <div class="auth-cover">
+                                <div class="title text-center">
+                                    <h1 class="text-primary mb-10">Welcome Back</h1>
+                                    <p class="text-medium">
+                                        Sign in to your existing account to continue
+                                    </p>
+                                </div>
+                                <div class="cover-image">
+                                    <img src="~/assets/images/auth/signin-image.svg" alt="" />
+                                </div>
+                                <div class="shape-image">
+                                    <img src="~/assets/images/auth/shape.svg" alt="" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                @model WebApplication2.Models.AdminLogin
+                    <div class="col-lg-6">
+                        <div class="signin-wrapper">
+                            <div class="form-wrapper">
+                                <h6 class="mb-15">Sign In Form</h6>
+                                <p class="text-sm mb-25">
+                                    Start creating the best possible user experience for your customers.
+                                </p>
+                            @if (ViewBag.Error != null)
+                            {
+                                <div class="alert alert-danger">@ViewBag.Error</div>
+                            }
+                            <form asp-action="Login" asp-controller="Admin" method="post" id="loginForm">
+                                @Html.AntiForgeryToken()
+                                <div class="row">
+                                    <!-- Email -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label asp-for="Email" class="form-label"></label>
+                                            <input asp-for="Email" class="form-control" placeholder="Enter Email" />
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Password -->
+                                    <div class="col-12">
+                                        <div class="input-style-1">
+                                            <label asp-for="Password" class="form-label"></label>
+                                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter Password" />
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Remember Me -->
+                                    <div class="col-12">
+                                        <div class="form-check checkbox-style mb-30">
+                                            <input class="form-check-input" type="checkbox" id="checkbox-remember" />
+                                            <label class="form-check-label" for="checkbox-remember">Remember me next time</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Forget Pasword -->
+                                    <div class="col-12 text-end mb-30">
+                                          <a data-bs-toggle="modal" data-bs-target="#exampleModal" class="hover-underline" style="cursor:pointer;">Forgot password?</a>
+                                        @* <a href="@Url.Action("ForgetPassword", "ForgetPassword")" class="hover-underline">Forget Password?</a> *@
+                                    </div> 
+
+                                    <!-- Submit Button -->
+                                    <div class="col-12">
+                                        <div class="button-group d-flex justify-content-center flex-wrap">
+                                            <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">Sign In</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- ========== section end ========== -->
+</body>
+</html>
+
+<!-- Modal -->
+ <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" asp-controller="Admin" asp-action="SendOTP">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Continue</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,190 @@
+﻿@{
+    Layout = null;
+    Layout = "~/Views/Shared/layout2.cshtml";
+}
+  @model WebApplication2.ViewModels.AdminSettingsViewModel
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    @Html.Partial("_Navbar")
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+        <!-- ========== header start ========== -->
+        <header class="header text-dark py-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-md-5 col-6">
+                        <div class="header-left d-flex align-items-center">
+                            <div class="menu-toggle-btn mr-15">
+                                <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                                    <i class="lni lni-chevron-left me-2"></i> Menu
+                                </button>
+                            </div>
+                            <div class="header-search d-none d-md-flex">
+                                <form asp-action="DashboardSearch" asp-controller="Admin" method="get" class="d-flex" style="margin-left:auto;">
+                                    <input type="text" name="search" class="form-control me-2" placeholder="Search..." value="@ViewBag.GlobalSearchQuery" />
+                                    <button class="btn btn-outline-primary" type="submit"><i class="lni lni-search-alt"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-6">
+                        <div class="header-right">
+                            <!-- profile start -->
+                            <div class="profile-box ml-15">
+                                <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="profile-info">
+                                        <div class="info">
+                                            <div class="image">
+                                                <img src="~/assets/images/profile/@Context.Session.GetString("AdminProfileImage")" alt="Admin Profile" class="profile-img" style="height:100%" />
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-500">@ViewBag.AdminName</h6>
+                                                <p>Admin</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                                    <li>
+                                        <div class="author-info flex items-center !p-1">
+                                            <div class="image">
+                                                <img src="@ViewBag.AdminProfileImage" alt="Admin Profile">
+                                            </div>
+                                            <div class="content">
+                                                <h4 class="text-sm"> @ViewBag.AdminName</h4>
+                                                <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#"></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a asp-action="Profile" asp-controller="Admin">
+                                            <i class="lni lni-user"></i> View Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @if (Context.Session.GetInt32("AdminId") != null)
+                                        {
+                                            <a asp-action="Settings" asp-controller="Admin" asp-route-id="@Context.Session.GetInt32("AdminId")">
+                                                <i class="lni lni-cog"></i> Settings
+                                            </a>
+                                        }
+                                    </li>
+                                    <li class="divider"></li>
+                                    <a class="dropdown-item text-danger" asp-action="Logout" asp-controller="Admin">
+                                        <i class="lni lni-exit me-2"></i> Logout
+                                    </a>
+                                </ul>
+                            </div>
+                            <!-- profile end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- ========== header end ========== -->
+        <!-- ========== section start ========== -->
+        <section class="section">
+            <div class="container-fluid">
+                <!-- ========== title-wrapper start ========== -->
+                <div class="title-wrapper pt-30">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="title">
+                                @*    <h2>Details</h2>  *@
+                            </div>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-md-6">
+                            <div class="breadcrumb-wrapper">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a href="#0">Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            Settings
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- ========== title-wrapper end ========== -->
+                <div class="row">
+                    <form asp-action="UpdateSettings" asp-controller="Admin" method="post" enctype="multipart/form-data">
+                        <div class="row g-4">
+                            <div class="col-lg-6">
+                                <div class="card-style settings-card-1 mb-30">
+                                    <div class="title mb-30 d-flex justify-content-between align-items-center">
+                                        <h6>My Profile</h6>
+                                    </div>
+                                    <div class="profile-info">
+                                        <div class="d-flex align-items-center mb-30">
+                                            <div class="profile-image">
+                                                <img src="@Url.Content(Model.ProfileImage)" alt="Profile Image" class="img-fluid rounded-circle" />
+                                                <div class="update-image">
+                                                    <label for="ProfileImage" class="form-label"><i class="lni lni-cloud-upload"></i></label>
+                                                    <input type="file" id="ProfileImage" name="profileImage" class="form-control" />
+                                                   @*  <input type="file" name="profileImage" />
+                                                    <label for=""></label> *@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card-style settings-card-2 mb-30">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="input-style-1">
+                                                <label for="Name">Name:</label>
+                                                <input type="text" id="Name" name="Name" class="form-control" value="@Model?.Name" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="input-style-1">
+                                                <label for="Email">Email:</label>
+                                                <input type="email" id="Email" name="Email" class="form-control" value="@Model?.Email" required />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="input-style-1">
+                                                <label for="Password">Password:</label>
+                                                <input type="password" id="Password" name="Password" class="form-control" value="@Model?.Password" required />
+                                            </div>
+                                        </div>
+                                       @*  <div class="col-12">
+                                            <label for="ProfileImage" class="form-label">Profile Image:</label>
+                                            <input type="file" id="ProfileImage" name="profileImage" class="form-control" />
+                                        </div> *@
+                                        <div class="col-12">
+                                            <button class="btn btn-primary mt-3" type="submit">Update Profile</button>
+                                             <a asp-action="Dashboard" asp-controller="Admin" class="btn btn-secondary mt-3">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- end col -->
+                </div>
+              <!-- end row -->
+            </div>
+            <!-- end container -->
+          </section>
+      <!-- ========== section end ========== -->
+        @Html.Partial("_Footer")
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+</body>
+</html>

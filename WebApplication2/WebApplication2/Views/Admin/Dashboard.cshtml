@@ -1,0 +1,832 @@
+﻿@{
+    Layout = null;
+    Layout = "~/Views/Shared/layout2.cshtml";
+}
+@model WebApplication2.Models.AdminLogin
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+    </head>
+<body>
+
+    @Html.Partial("_Navbar")
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+
+        <!-- ========== header start ========== -->
+        <header class="header text-dark py-3">
+            <div class="container-fluid">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 col-md-5 col-6">
+                        <div class="header-left d-flex align-items-center">
+                            <div class="menu-toggle-btn mr-15">
+                                <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                                    <i class="lni lni-chevron-left me-2"></i> Menu
+                                </button>
+                            </div>
+                            <div class="header-search d-none d-md-flex">
+                                <form asp-action="DashboardSearch" asp-controller="Admin" method="get" class="d-flex" style="margin-left:auto;">
+                                    <input type="text" name="search" class="form-control me-2" placeholder="Search..." value="@ViewBag.GlobalSearchQuery" />
+                                    <button class="btn btn-outline-primary" type="submit"><i class="lni lni-search-alt"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-md-7 col-6">
+                        <div class="header-right">
+                            <!-- profile start -->
+                            <div class="profile-box ml-15">
+                                <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="profile-info">
+                                        <div class="info">
+                                            <div class="image">
+                                                <img src="~/assets/images/profile/@Context.Session.GetString("AdminProfileImage")" alt="Admin Profile" class="profile-img" style="height:100%" />
+                                            </div>
+                                            <div>
+                                                <h6 class="fw-500">@ViewBag.AdminName</h6>
+                                                <p>Admin</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                                    <li>
+                                        <div class="author-info flex items-center !p-1">
+                                            <div class="image">
+                                                <img src="@ViewBag.AdminProfileImage" alt="Admin Profile">
+                                            </div>
+                                            <div class="content">
+                                                <h4 class="text-sm"> @ViewBag.AdminName</h4>
+                                                <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#"></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a asp-action="Profile" asp-controller="Admin">
+                                            <i class="lni lni-user"></i> View Profile
+                                        </a>
+                                    </li>
+                                    <li>
+                                        @if (Context.Session.GetInt32("AdminId") != null)
+                                        {
+                                            <a asp-action="Settings" asp-controller="Admin" asp-route-id="@Context.Session.GetInt32("AdminId")">
+                                                <i class="lni lni-cog"></i> Settings
+                                            </a>
+                                        }
+                                    </li>
+                                    <li class="divider"></li>
+                                    <a class="dropdown-item text-danger" asp-action="Logout" asp-controller="Admin">
+                                        <i class="lni lni-exit me-2"></i> Logout
+                                    </a>
+                                </ul>
+                            </div>
+                            <!-- profile end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- ========== header end ========== -->
+        <!-- ========== section start ========== -->
+        <section class="section">
+            <div class="container-fluid">
+                <!-- ========== title-wrapper start ========== -->
+                <div class="title-wrapper pt-30">
+                    <div class="row align-items-center">
+                        <div class="col-md-6">
+                            <div class="title">
+                                <h2>Admin Dashboard</h2>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                        <div class="col-md-6">
+                            <div class="breadcrumb-wrapper">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item">
+                                            <a href="#0">Dashboard</a>
+                                        </li>
+                                        <li class="breadcrumb-item active" aria-current="page">
+                                            Dashboard
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                    <!-- end row -->
+                </div>
+                <!-- ========== title-wrapper end ========== -->
+                <!-- ========== dashboard start ========== -->
+                <div class="container my-2">
+                    <div class="row text-center mb-4">
+                        <div class="col-xl-3 col-lg-4 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                            <div class="icon-card mb-30">
+                                <div class="icon purple">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                                <div class="content">
+                                    <h6 class="mb-10">Total Employees</h6>
+                                    <h3 class="text-bold text-primary mb-10">@Context.Session.GetInt32("TotalEmployees")</h3>
+                                </div>
+                            </div>
+                            <!-- End Icon Cart -->
+                        </div>
+                        <!-- End Col -->
+                        <!-- Managers -->
+                        <div class="col-xl-3 col-lg-4 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                            <div class="icon-card mb-30">
+                                <div class="icon primary">
+                                    <i class="lni lni-user"></i>
+                                </div>
+                                <div class="content">
+                                    <h6 class="mb-10">Managers</h6>
+                                    <h3 class="text-bold text-primary mb-10">@Context.Session.GetInt32("ManagerCount")</h3>
+                                </div>
+                            </div>
+                            <!-- End Icon Cart -->
+                        </div>
+                        <!-- End Col -->
+
+                        <!-- Active Employees -->
+                        <div class="col-xl-3 col-lg-4 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                            <div class="icon-card mb-30">
+                                <div class="icon success">
+                                    <i class="bi bi-person-fill-check"></i>
+                                </div>
+                                <div class="content">
+                                    <h6 class="mb-10">Active Employees</h6>
+                                    <h3 class="text-bold text-success mb-10">@Context.Session.GetInt32("EmployeeCount")</h3>
+                                </div>
+                            </div>
+                            <!-- End Icon Cart -->
+                        </div>
+                        <!-- End Col -->
+                        <!-- Inactive Employees -->
+                        <div class="col-xl-3 col-lg-4 col-sm-6 animate__animated animate__fadeInUp" style="animation-delay: 0.8s;">
+                            <div class="icon-card mb-30">
+                                <div class="icon text-danger">
+                                    <i class="bi bi-person-fill-x"></i>
+                                </div>
+                                <div class="content">
+                                    <h6 class="mb-10">Inactive Employees</h6>
+                                    <h3 class="text-bold text-danger mb-10">@Context.Session.GetInt32("InactiveEmployeesCount")</h3>
+                                </div>
+                            </div>
+                            <!-- End Icon Cart -->
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                    <!-- End Row -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex flex-wrap justify-content-between">
+                                <div class="left">
+                                    <h6 class="text-medium mb-10">Yearly Stats</h6>
+                                    <h3 class="text-bold">$245,479</h3>
+                                </div>
+                                <div class="right">
+                                    <div class="select-style-1">
+                                        <div class="select-position select-sm">
+                                            <select class="light-bg">
+                                                <option value="">Yearly</option>
+                                                <option value="">Monthly</option>
+                                                <option value="">Weekly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end select -->
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div class="chart">
+                                <canvas id="Chart1" style="width: 100%; height: 400px; margin-left: -35px;"></canvas>
+                            </div>
+                            <!-- End Chart -->
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-lg-5">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="left">
+                                    <h6 class="text-medium mb-30">Sales/Revenue</h6>
+                                </div>
+                                <div class="right">
+                                    <div class="select-style-1">
+                                        <div class="select-position select-sm">
+                                            <select class="light-bg">
+                                                <option value="">Yearly</option>
+                                                <option value="">Monthly</option>
+                                                <option value="">Weekly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end select -->
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div class="chart">
+                                <canvas id="Chart2" style="width: 100%; height: 400px; margin-left: -45px;"></canvas>
+                            </div>
+                            <!-- End Chart -->
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex justify-content-between align-items-center">
+                                <div class="left">
+                                    <h6 class="text-medium mb-30">Sells by State</h6>
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div id="map" style="width: 100%; height: 400px; overflow: hidden;"></div>
+                            <p>Last updated: 7 days ago</p>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-lg-7">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="left">
+                                    <h6 class="text-medium mb-30">Top Selling Products</h6>
+                                </div>
+                                <div class="right">
+                                    <div class="select-style-1">
+                                        <div class="select-position select-sm">
+                                            <select class="light-bg">
+                                                <option value="">Yearly</option>
+                                                <option value="">Monthly</option>
+                                                <option value="">Weekly</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end select -->
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div class="table-responsive">
+                                <table class="table top-selling-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Products</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Category</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Price</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Sold</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">Profit</h6>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="check-input-primary">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-1" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-1.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Arm Chair</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$345</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">43</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$45</p>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="check-input-primary">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-1" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-2.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">SOfa</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$145</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">13</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$15</p>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="check-input-primary">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-1" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-3.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Dining Table</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$95</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">32</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$215</p>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="check-input-primary">
+                                                    <input class="form-check-input" type="checkbox" id="checkbox-1" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-4.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Office Chair</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$105</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">23</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$345</p>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="left">
+                                    <h6 class="text-medium mb-2">Sales Forecast</h6>
+                                </div>
+                                <div class="right">
+                                    <div class="select-style-1 mb-2">
+                                        <div class="select-position select-sm">
+                                            <select class="light-bg">
+                                                <option value="">Last Month</option>
+                                                <option value="">Last 3 Months</option>
+                                                <option value="">Last Year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end select -->
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div class="chart">
+                                <div id="legend3">
+                                    <ul class="legend3 d-flex flex-wrap align-items-center mb-30">
+                                        <li>
+                                            <div class="d-flex">
+                                                <span class="bg-color primary-bg"> </span>
+                                                <div class="text">
+                                                    <p class="text-sm text-success">
+                                                        <span class="text-dark">Revenue</span> +25.55%
+                                                        <i class="lni lni-arrow-up"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex">
+                                                <span class="bg-color purple-bg"></span>
+                                                <div class="text">
+                                                    <p class="text-sm text-success">
+                                                        <span class="text-dark">Net Profit</span> +45.55%
+                                                        <i class="lni lni-arrow-up"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex">
+                                                <span class="bg-color orange-bg"></span>
+                                                <div class="text">
+                                                    <p class="text-sm text-danger">
+                                                        <span class="text-dark">Order</span> -4.2%
+                                                        <i class="lni lni-arrow-down"></i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <canvas id="Chart3" style="width: 100%; height: 450px; margin-left: -35px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-lg-5">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="left">
+                                    <h6 class="text-medium mb-2">Traffic</h6>
+                                </div>
+                                <div class="right">
+                                    <div class="select-style-1 mb-2">
+                                        <div class="select-position select-sm">
+                                            <select class="bg-ligh">
+                                                <option value="">Last 6 Months</option>
+                                                <option value="">Last 3 Months</option>
+                                                <option value="">Last Year</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end select -->
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div class="chart">
+                                <div id="legend4">
+                                    <ul class="legend3 d-flex flex-wrap gap-3 gap-sm-0 align-items-center mb-30">
+                                        <li>
+                                            <div class="d-flex">
+                                                <span class="bg-color primary-bg"> </span>
+                                                <div class="text">
+                                                    <p class="text-sm text-success">
+                                                        <span class="text-dark">Store Visits</span>
+                                                        +25.55%
+                                                        <i class="lni lni-arrow-up"></i>
+                                                    </p>
+                                                    <h2>3456</h2>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="d-flex">
+                                                <span class="bg-color danger-bg"></span>
+                                                <div class="text">
+                                                    <p class="text-sm text-danger">
+                                                        <span class="text-dark">Visitors</span> -2.05%
+                                                        <i class="lni lni-arrow-down"></i>
+                                                    </p>
+                                                    <h2>3456</h2>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <canvas id="Chart4" style="width: 100%; height: 420px; margin-left: -35px;"></canvas>
+                            </div>
+                            <!-- End Chart -->
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+                <div class="row">
+                    <div class="col-lg-5">
+                        <div class="card-style calendar-card mb-30">
+                            <div id="calendar-mini"></div>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-lg-7">
+                        <div class="card-style mb-30">
+                            <div class="title d-flex flex-wrap align-items-center justify-content-between">
+                                <div class="left">
+                                    <h6 class="text-medium mb-30">Sales History</h6>
+                                </div>
+                                <div class="right">
+                                    <div class="select-style-1">
+                                        <div class="select-position select-sm">
+                                            <select class="light-bg">
+                                                <option value="">Today</option>
+                                                <option value="">Yesterday</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- end select -->
+                                </div>
+                            </div>
+                            <!-- End Title -->
+                            <div class="table-responsive">
+                                <table class="table top-selling-table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h6 class="text-sm text-medium">Products</h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Category <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Revenue <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th class="min-width">
+                                                <h6 class="text-sm text-medium">
+                                                    Status <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                            <th>
+                                                <h6 class="text-sm text-medium text-end">
+                                                    Actions <i class="lni lni-arrows-vertical"></i>
+                                                </h6>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-1.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Bedroom</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$345</p>
+                                            </td>
+                                            <td>
+                                                <span class="status-btn close-btn">Pending</span>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="edit">
+                                                        <i class="lni lni-pencil"></i>
+                                                    </button>
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-2.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Arm Chair</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$345</p>
+                                            </td>
+                                            <td>
+                                                <span class="status-btn warning-btn">Refund</span>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="edit">
+                                                        <i class="lni lni-pencil"></i>
+                                                    </button>
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-3.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Sofa</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$345</p>
+                                            </td>
+                                            <td>
+                                                <span class="status-btn success-btn">Completed</span>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="edit">
+                                                        <i class="lni lni-pencil"></i>
+                                                    </button>
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="product">
+                                                    <div class="image">
+                                                        <img src="assets/images/products/product-mini-4.jpg" alt="" />
+                                                    </div>
+                                                    <p class="text-sm">Kitchen</p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">Interior</p>
+                                            </td>
+                                            <td>
+                                                <p class="text-sm">$345</p>
+                                            </td>
+                                            <td>
+                                                <span class="status-btn close-btn">Canceled</span>
+                                            </td>
+                                            <td>
+                                                <div class="action justify-content-end">
+                                                    <button class="edit">
+                                                        <i class="lni lni-pencil"></i>
+                                                    </button>
+                                                    <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="lni lni-more-alt"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Remove</a>
+                                                        </li>
+                                                        <li class="dropdown-item">
+                                                            <a href="#0" class="text-gray">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- End Table -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Col -->
+                </div>
+                <!-- End Row -->
+            </div>
+            <!-- end container -->
+        </section>
+        <!-- ========== section end ========== -->
+
+    @Html.Partial("_Footer")
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+</body>
+</html>

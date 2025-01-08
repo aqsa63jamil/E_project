@@ -1,0 +1,75 @@
+﻿@model WebApplication2.Models.Per_Hospital
+
+@{
+    ViewData["Title"] = "Create Hospital";
+
+    Layout = "~/Views/Shared/_Hospital_Layout.cshtml";
+}
+@Html.Partial("_Notification")
+<div class="container mt-5">
+    <div class="form-wrapper">
+        <h2 class="text-center mb-4">Create New Hospital</h2>
+        <form method="post">
+            <div class="container py-4 px-3 border rounded shadow-lg bg-light">
+                <div class="row g-4">
+                    <!-- Total Beds -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="TotalBeds" class="form-control" id="TotalBeds" required />
+                            <label for="TotalBeds" class="control-label"><i class="fa-regular fa-bed" style="color: #595f69;"></i> Total Beds</label>
+                            <span asp-validation-for="TotalBeds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Active Beds -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="ActiveBeds" class="form-control" id="ActiveBeds" required />
+                            <label for="ActiveBeds" class="control-label"><i class="fa-solid fa-bed" style="color: #595f69;"></i> Active Beds</label>
+                            <span asp-validation-for="ActiveBeds" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Total Doctors -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="TotalDoctors" class="form-control" id="TotalDoctors" required />
+                            <label for="TotalDoctors" class="control-label"><i class="fa-solid fa-user-doctor" style="color: #595f69;"></i> Total Doctors</label>
+                            <span asp-validation-for="TotalDoctors" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Total Nurses -->
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input asp-for="TotalNurses" class="form-control" id="TotalNurses" required />
+                            <label for="TotalNurses" class="control-label"><i class="fa-solid fa-user-nurse" style="color: #595f69;"></i> Total Nurses</label>
+                            <span asp-validation-for="TotalNurses" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-outline-primary btn-hover px-4 py-2">Create</button>
+                    </div>
+                  @*   <div class="form-actions d-flex justify-content-center mt-4">
+                        @if (Model != null)
+                        {
+                            <a asp-action="Edit" asp-controller="Personal_Hospital" asp-route-id="@Model.Id" class="text-primary me-3">
+                                <i class="bi bi-pencil-square" style="font-size: 1.2rem;"></i>
+                            </a>
+                            <a asp-action="Delete" asp-controller="Personal_Hospital" asp-route-id="@Model.Id" class="text-danger">
+                                <i class="lni lni-trash-can" style="font-size: 1.2rem;"></i>
+                            </a>
+                        }
+                        else
+                        {
+                            <p class="text-danger">Model is null!</p>
+                        }
+                    </div> *@
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,97 @@
+﻿@model WebApplication2.Models.TreatmentRequest
+@{
+    ViewData["Title"] = "Treatment Request";
+    Layout = "~/views/shared/_hospital_layout.cshtml";
+}
+<head>
+
+</head>
+@Html.Partial("_Notification")
+
+<div class="container my-5">
+    <div class="form-wrapper">
+        <h2 class="form-title text-center mb-4">Create Treatment Request</h2>
+        <form method="post">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="row g-4">
+                        <!-- Employee ID -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="EmpId" class="form-control form-control-lg" placeholder="Employee ID" required />
+                                <label class="form-label">Employee ID</label>
+                            </div>
+                        </div>
+
+                        <!-- Employee Email -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Emp_Email" class="form-control form-control-lg" placeholder="Employee Email" required />
+                                <label class="form-label">Employee Email</label>
+                            </div>
+                        </div>
+
+                        <!-- Finance Manager -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="FinanceManagerId" asp-items="ViewBag.FinanceManagers" class="form-select form-select-lg" required>
+                                    <option value="" disabled selected>Select Finance Manager</option>
+                                </select>
+                                <label class="form-label">Finance Manager</label>
+                            </div>
+                        </div>
+
+                        <!-- Hospital -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="HospitalId" asp-items="ViewBag.Hospitals" class="form-select form-select-lg" required>
+                                    <option value="" disabled selected>Select Hospital</option>
+                                </select>
+                                <label class="form-label">Hospital</label>
+                            </div>
+                        </div>
+
+                        <!-- Treatment Details -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <textarea asp-for="TreatmentDetails" placeholder="Treatment Details" class="form-control form-control-lg" rows="4" required></textarea>
+                                <label class="form-label">Treatment Details</label>
+                            </div>
+                        </div>
+
+                        <!-- Request Date -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="RequestDate" type="date" class="form-control form-control-lg" required />
+                                <label class="form-label">Request Date</label>
+                            </div>
+                        </div>
+
+                        <!-- Approval Date -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="ApprovalDate" type="date" class="form-control form-control-lg" />
+                                <label class="form-label">Approval Date (optional)</label>
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="Status" class="form-select form-select-lg" required>
+                                    <option value="Pending" selected>Pending</option>
+                                </select>
+                                <label class="form-label">Status</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-4 py-2">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
