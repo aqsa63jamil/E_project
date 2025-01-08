@@ -1,0 +1,88 @@
+﻿@model WebApplication2.Models.VisitRequest
+
+@{
+    ViewData["Title"] = "Visit Request";
+    Layout = "~/Views/Shared/_Hospital_Layout.cshtml";
+}
+@Html.Partial("_Notification")
+
+<div class="container my-5">
+    <div class="form-wrapper">
+        <h2 class="form-title text-center mb-4">Create Visit Request</h2>
+        <form method="post">
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <div class="row g-4">
+                        <!-- Employee ID -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="EmpId" class="form-control form-control-lg" required />
+                                <label asp-for="EmpId" class="form-label">Employee ID</label>
+                            </div>
+                        </div>
+                        <!-- Employee Email -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Emp_Email" class="form-control form-control-lg" required />
+                                <label asp-for="Emp_Email" class="form-label">Employee Email</label>
+                            </div>
+                        </div>
+                        <!-- Hospital -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="HospitalId" asp-items="ViewBag.HospitalId" class="form-select form-select-lg" required>
+                                    <option value="" disabled selected>Select Hospital</option>
+                                </select>
+                                <label asp-for="HospitalId" class="form-label">Hospital</label>
+                            </div>
+                        </div>
+                        <!-- Reason -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <textarea asp-for="Reason" class="form-control form-control-lg" rows="3" required></textarea>
+                                <label asp-for="Reason" class="form-label">Reason for Visit</label>
+                            </div>
+                        </div>
+                        <!-- Finance Manager -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="FinanceManagerId" asp-items="ViewBag.FinanceManagers" class="form-select form-select-lg" required>
+                                    <option value="" disabled selected>Select Finance Manager</option>
+                                </select>
+                                <label asp-for="FinanceManagerId" class="form-label">Finance Manager</label>
+                            </div>
+                        </div>
+                        <!-- Requested At -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="RequestedAt" type="date" class="form-control form-control-lg" required />
+                                <label asp-for="RequestedAt" class="form-label">Requested At</label>
+                            </div>
+                        </div>
+                        <!-- Status -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <select asp-for="Status" class="form-select form-select-lg" required>
+                                    <option value="Pending" selected>Pending</option>
+                                </select>
+                                <label asp-for="Status" class="form-label">Status</label>
+                            </div>
+                        </div>
+                        <!-- Employee CNIC -->
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input asp-for="Emp_CNIC" class="form-control form-control-lg" required />
+                                <label asp-for="Emp_CNIC" class="form-label">Employee CNIC</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions d-flex justify-content-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg px-4 py-2">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

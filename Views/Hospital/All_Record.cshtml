@@ -1,0 +1,59 @@
+﻿
+@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "Hospital Dashboard";
+    Layout = "~/Views/Shared/_Hospital_Layout.cshtml";
+}
+@Html.Partial("_Notification")
+<section class="billing py-5 bg-light">
+    <div class="container">
+        <h2 class="mb-4 text-center text-primary">Recent Payments</h2>
+
+        <!-- Table Wrapper -->
+        <div class="table-wrapper table-responsive table-bordered table-striped shadow-sm rounded-lg bg-white">
+            <table class="table table-hover table-sm" style="border-spacing: 0 10px; border-collapse: separate;">
+                <thead class="thead-light bg-info text-white">
+                    <tr>
+                        <th class="text-center px-3 py-2">Employee Name</th>
+                        <th class="text-center px-3 py-2">Description</th>
+                        <th class="text-center px-3 py-2">Amount</th>
+                        <th class="text-center px-3 py-2">Email</th>
+                        <th class="text-center px-3 py-2">Discharge Date</th>
+                    </tr>
+                </thead>
+                <tbody id="payment-table-body">
+                    @Html.Partial("_PaymentTablePartial", Model.Payment)
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("All_Record", new { page = ViewBag.CurrentPage - 1, query = ViewBag.Query })">
+                        <i class="fa fa-chevron-left"></i> Previous
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("All_Record", new { page = i, query = ViewBag.Query })">@i</a>
+                    </li>
+                }
+
+                <!-- Next Button -->
+                <li class="page-item @(ViewBag.CurrentPage == ViewBag.TotalPages ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Action("All_Record", new { page = ViewBag.CurrentPage + 1, query = ViewBag.Query })">
+                        Next <i class="fa fa-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>

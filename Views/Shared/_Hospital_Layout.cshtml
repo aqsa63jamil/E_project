@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Dashboard</title>
+    <link rel="stylesheet" href="~/DashBaord/main.css">
+    <link rel="stylesheet" href="~/DashBaord/sidebar.css">
+    <link rel="stylesheet" href="~/DashBaord/dashboard.css">
+    <link rel="stylesheet" href="~/DashBaord/theme.css">
+    <link rel="stylesheet" href="~/DashBaord/Form.css">
+    <link rel="stylesheet" href="~/DashBaord/Pagination.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+@*     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+ *@    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <!-- LineIcons -->
+    <link href="https://cdn.jsdelivr.net/npm/line-icons@2.0.0/dist/line-icons.min.css" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-hospital"></i>
+                <h2 class="text-dark">MediCare</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a asp-action="Hospital_Index" asp-controller="Hospital"><i class="fas fa-hospital"></i> Hospital</a>
+                 <a asp-action="Create" asp-controller="Personal_Hospital"><i class="fas fa-plus-circle"></i> Create</a>
+                @*<a asp-action="Edit" asp-controller="Personal_Hospital"><i class="fas fa-edit"></i> Edit</a> *@
+                @* <a asp-action="Index" asp-controller="Personal_Hospital"><i class="fas fa-hospital"></i> Index</a> *@
+               @*  <a asp-action="All_Record" asp-controller="Hospital"><i class="fas fa-file-invoice"></i> All Record</a> *@
+                <a asp-action="Visit_Request" asp-controller="Hospital"><i class="fas fa-stethoscope"></i> Visit Table</a>
+                <a asp-action="Treatment_Request" asp-controller="Hospital"><i class="fas fa-capsules"></i> Treatment Table</a>
+                <a asp-action="CreateMedicalInvoice" asp-controller="Medical_Report"><i class="fas fa-file-invoice"></i> Discharge Table</a>
+                <a asp-action="Logout" asp-controller="Hospital" class="text-danger"><i class="fas fa-file-invoice"></i> Logout</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="animate__animated animate__fadeInDown">Hospital Management Dashboard</h1>
+                    <p class="promo lead animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">Welcome to our hospital! Start your journey with a personalized medical checkup 🏥 – <span id="current-time"></span></p>
+                </div>
+            </section>
+            @RenderBody()
+        </main>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Theme Toggle -->
+        <div class="theme-toggle">
+            <input type="checkbox" id="theme-switch">
+            <label for="theme-switch">
+                <i class="fas fa-sun"></i>
+                <i class="fas fa-moon"></i>
+            </label>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/DashBaord/sidebar.js"></script>
+<script src="~/DashBaord/theme.js"></script>
+<script src="~/DashBaord/Counter.js"></script>
+<script src="~/DashBaord/time.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.8/umd/popper.min.js" integrity="sha512-TPh2Oxlg1zp+kz3nFA0C5vVC6leG/6mm1z9+mA81MI5eaUVqasPLO8Cuk4gMF4gUfP5etR73rgU/8PNMsSesoQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js"></script>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+<script src="~/lib/jquery-validation/dist/additional-methods.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+<!-- Code injected by live-server -->
+<script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+        (function () {
+            function refreshCSS() {
+                var sheets = [].slice.call(document.getElementsByTagName("link"));
+                var head = document.getElementsByTagName("head")[0];
+                for (var i = 0; i < sheets.length; ++i) {
+                    var elem = sheets[i];
+                    var parent = elem.parentElement || head;
+                    parent.removeChild(elem);
+                    var rel = elem.rel;
+                    if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                        var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                    }
+                    parent.appendChild(elem);
+                }
+            }
+            var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+            var address = protocol + window.location.host + window.location.pathname + '/ws';
+            var socket = new WebSocket(address);
+            socket.onmessage = function (msg) {
+                if (msg.data == 'reload') window.location.reload();
+                else if (msg.data == 'refreshcss') refreshCSS();
+            };
+            if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                console.log('Live reload enabled.');
+                sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+            }
+        })();
+    }
+    else {
+        console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+</script>
